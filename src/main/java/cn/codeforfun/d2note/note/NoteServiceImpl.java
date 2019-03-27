@@ -29,11 +29,11 @@ public class NoteServiceImpl {
         return noteRepository.save(note);
     }
 
-    Note findById(Integer id) {
+    Note findById(Long id) {
         return noteRepository.findByIdFetch(id).orElseThrow(NoteNotFoundException::new);
     }
 
-    void deleteById(Integer id) {
+    void deleteById(Long id) {
         noteRepository.deleteById(id);
     }
 }

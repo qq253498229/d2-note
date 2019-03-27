@@ -33,7 +33,7 @@ public class NoteServiceImplTest {
 
     @Test
     public void save() {
-        given(noteRepository.save(any())).willReturn(new Note(1, "tlx-xl"));
+        given(noteRepository.save(any())).willReturn(new Note(1L, "tlx-xl"));
         Note save = noteService.save(new Note("tlx-xl"));
         assertNotNull(save);
         assertSame(save.getId(), 1);
@@ -42,13 +42,13 @@ public class NoteServiceImplTest {
 
     @Test
     public void findById() {
-        given(noteRepository.findByIdFetch(1)).willReturn(Optional.of(new Note(1, "tlx-xl")));
-        Note note = noteService.findById(1);
+        given(noteRepository.findByIdFetch(1L)).willReturn(Optional.of(new Note(1L, "tlx-xl")));
+        Note note = noteService.findById(1L);
         assertNotNull(note);
     }
 
     @Test
     public void deleteById() {
-        noteService.deleteById(1);
+        noteService.deleteById(1L);
     }
 }

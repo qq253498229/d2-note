@@ -16,7 +16,6 @@ import javax.annotation.Resource;
 import java.util.Arrays;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -52,7 +51,7 @@ public class AccountControllerTest {
     @Test
     @WithMockUser
     public void save() throws Exception {
-        given(accountService.save(any())).willReturn(new Account(1, "mf-sor"));
+        given(accountService.save(any())).willReturn(new Account(1L, "mf-sor"));
 
         mockMvc.perform(
                 post("/account")
@@ -70,7 +69,7 @@ public class AccountControllerTest {
     @Test
     @WithMockUser
     public void findById() throws Exception {
-        given(accountService.findById(anyInt())).willReturn(new Account(1, "mf-sor"));
+        given(accountService.findById(any())).willReturn(new Account(1L, "mf-sor"));
 
         mockMvc.perform(get("/account/1"))
                 .andExpect(status().isOk())
@@ -84,7 +83,7 @@ public class AccountControllerTest {
     @Test
     @WithMockUser
     public void findById_notFound() throws Exception {
-        given(accountService.findById(anyInt())).willThrow(AccountNotFoundException.class);
+        given(accountService.findById(any())).willThrow(AccountNotFoundException.class);
 
         mockMvc.perform(get("/account/1"))
                 .andExpect(status().isNotFound())

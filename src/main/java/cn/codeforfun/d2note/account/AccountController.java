@@ -30,12 +30,12 @@ public class AccountController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity findById(@PathVariable Integer id) {
+    public ResponseEntity findById(@PathVariable Long id) {
         return ok(accountService.findById(id));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity deleteById(@PathVariable Integer id) {
+    public ResponseEntity deleteById(@PathVariable Long id) {
         accountService.deleteById(id);
         return ok().build();
     }

@@ -2,9 +2,9 @@ package cn.codeforfun.d2note.note;
 
 import cn.codeforfun.d2note.account.Account;
 import cn.codeforfun.d2note.util.JsonUtil;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -18,20 +18,19 @@ import java.util.Date;
 @Data
 @Entity
 @NoArgsConstructor
-@JsonIgnoreProperties({"notes", "note"})
 public class Note implements Serializable {
 
     private static final long serialVersionUID = 5682218674157894432L;
 
     @Id
-    @GeneratedValue
-    private Integer id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
 
     @Column(nullable = false, length = 32)
     private String name;
 
     @ManyToOne
-    @JoinColumn(name = "account_id")
+    @JsonIgnoreProperties({"notes", "note"})
     private Account account;
 
     private Date updateAt = new Date();
@@ -40,7 +39,7 @@ public class Note implements Serializable {
         this.name = name;
     }
 
-    Note(int id, String name) {
+    Note(Long id, String name) {
         this.id = id;
         this.name = name;
     }

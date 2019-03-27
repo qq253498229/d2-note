@@ -29,12 +29,12 @@ public class NoteController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity findByIdFetch(@PathVariable Integer id) {
+    public ResponseEntity findByIdFetch(@PathVariable Long id) {
         return ok(noteService.findById(id));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity deleteById(@PathVariable Integer id) {
+    public ResponseEntity deleteById(@PathVariable Long id) {
         noteService.deleteById(id);
         return ok().build();
     }

@@ -27,12 +27,12 @@ public class AccountService {
         return accountRepository.save(account);
     }
 
-    Account findById(Integer id) {
+    Account findById(Long id) {
         Optional<Account> account = accountRepository.findByIdFetch(id);
         return account.orElseThrow(AccountNotFoundException::new);
     }
 
-    void deleteById(Integer id) {
+    void deleteById(Long id) {
         accountRepository.deleteById(id);
     }
 }

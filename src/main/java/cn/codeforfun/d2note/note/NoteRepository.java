@@ -12,13 +12,13 @@ import java.util.Optional;
  * @mail 253498229@qq.com
  * @qq 253498229
  */
-public interface NoteRepository extends JpaRepository<Note, Integer> {
+public interface NoteRepository extends JpaRepository<Note, Long> {
     /**
      * 获取笔记列表关联账号
      *
      * @return 笔记列表
      */
-    @Query("select n from Note n left join fetch n.account order by n.updateAt desc ")
+    @Query("select distinct n from Note n left join fetch n.account order by n.updateAt desc ")
     List<Note> findAllFetch();
 
     /**
@@ -28,5 +28,5 @@ public interface NoteRepository extends JpaRepository<Note, Integer> {
      * @return 笔记
      */
     @Query("select n from Note n left join fetch n.account where n.id=:id")
-    Optional<Note> findByIdFetch(@Param("id") Integer id);
+    Optional<Note> findByIdFetch(@Param("id") Long id);
 }

@@ -32,7 +32,7 @@ public class AccountServiceTest {
     @Test
     public void save() {
 
-        given(accountRepository.save(any())).willReturn(new Account(1, "mf-sor"));
+        given(accountRepository.save(any())).willReturn(new Account(1L, "mf-sor"));
 
         Account save = accountService.save(new Account());
         assertNotNull(save);
@@ -42,9 +42,9 @@ public class AccountServiceTest {
 
     @Test
     public void findById() {
-        given(accountRepository.findByIdFetch(any())).willReturn(Optional.of(new Account(1, "mf-sor")));
+        given(accountRepository.findByIdFetch(any())).willReturn(Optional.of(new Account(1L, "mf-sor")));
 
-        Account account = accountService.findById(1);
+        Account account = accountService.findById(1L);
         assertNotNull(account);
         assertSame(account.getId(), 1);
         assertEquals(account.getName(), "mf-sor");
@@ -52,6 +52,6 @@ public class AccountServiceTest {
 
     @Test
     public void deleteById() {
-        accountService.deleteById(1);
+        accountService.deleteById(1L);
     }
 }
