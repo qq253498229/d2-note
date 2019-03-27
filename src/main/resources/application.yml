@@ -24,3 +24,23 @@ security:
     client:
       client-id: client
       client-secret: secret
+---
+spring:
+  profiles: docker
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    url: jdbc:mysql://${DB_HOST}:${DB_PORT}/${DB_NAME}?createDatabaseIfNotExist=true
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+security:
+  oauth2:
+    resource:
+      token-info-uri: ${OAUTH_URL}/oauth/check_token
+    client:
+      client-id: ${OAUTH_CLIENT_ID}
+      client-secret: ${OAUTH_CLIENT_SECRET}

@@ -36,7 +36,7 @@ public class AccountServiceTest {
 
         Account save = accountService.save(new Account());
         assertNotNull(save);
-        assertSame(save.getId(), 1);
+        assertSame(save.getId(), 1L);
         assertEquals(save.getName(), "mf-sor");
     }
 
@@ -46,7 +46,7 @@ public class AccountServiceTest {
 
         Account account = accountService.findById(1L);
         assertNotNull(account);
-        assertSame(account.getId(), 1);
+        assertSame(account.getId(), 1L);
         assertEquals(account.getName(), "mf-sor");
     }
 

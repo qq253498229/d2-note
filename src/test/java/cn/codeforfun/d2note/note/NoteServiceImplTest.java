@@ -36,7 +36,7 @@ public class NoteServiceImplTest {
         given(noteRepository.save(any())).willReturn(new Note(1L, "tlx-xl"));
         Note save = noteService.save(new Note("tlx-xl"));
         assertNotNull(save);
-        assertSame(save.getId(), 1);
+        assertSame(save.getId(), 1L);
         assertEquals(save.getName(), "tlx-xl");
     }
 

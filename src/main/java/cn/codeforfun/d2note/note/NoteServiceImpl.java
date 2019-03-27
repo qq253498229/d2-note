@@ -2,6 +2,7 @@ package cn.codeforfun.d2note.note;
 
 import cn.codeforfun.d2note.note.exception.NoteNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 
 import javax.annotation.Resource;
 import java.util.Date;
@@ -22,7 +23,7 @@ public class NoteServiceImpl {
     }
 
     Note save(Note note) {
-        if (note.getAccount().getId() == 0) {
+        if (!ObjectUtils.isEmpty(note.getAccount()) && note.getAccount().getId() == 0) {
             note.setAccount(null);
         }
         note.setUpdateAt(new Date());
