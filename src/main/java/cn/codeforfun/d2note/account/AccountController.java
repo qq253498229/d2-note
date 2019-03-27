@@ -1,9 +1,7 @@
 package cn.codeforfun.d2note.account;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 
@@ -24,5 +22,10 @@ public class AccountController {
     @GetMapping
     public ResponseEntity getAll() {
         return ok(accountService.findAll());
+    }
+
+    @PostMapping
+    public ResponseEntity save(@RequestBody Account account) {
+        return ok(accountService.save(account));
     }
 }

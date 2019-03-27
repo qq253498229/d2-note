@@ -18,4 +18,8 @@ public class AccountService {
     public List<Account> findAll() {
         return accountRepository.findAll();
     }
+
+    public Account save(Account account) {
+        return accountRepository.save(account);
+    }
 }
