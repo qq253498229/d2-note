@@ -2,6 +2,9 @@ package cn.codeforfun.d2note.account;
 
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
+import java.util.List;
+
 /**
  * @author wangbin
  * @mail 253498229@qq.com
@@ -9,7 +12,10 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class AccountService {
-    public Object findAll() {
-        return null;
+    @Resource
+    private AccountRepository accountRepository;
+
+    public List<Account> findAll() {
+        return accountRepository.findAll();
     }
 }
