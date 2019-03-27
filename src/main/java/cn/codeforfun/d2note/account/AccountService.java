@@ -1,7 +1,6 @@
 package cn.codeforfun.d2note.account;
 
 import cn.codeforfun.d2note.account.exception.AccountNotFoundException;
-import cn.codeforfun.d2note.util.SecurityUtil;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
@@ -22,24 +21,24 @@ public class AccountService {
     @Resource
     private AccountRepository accountRepository;
 
-    public List<Account> findAll() {
-        return accountRepository.findAllFetch(SecurityUtil.getUsername());
+    public List<Account> findAll(String username) {
+        return accountRepository.findAllFetch(username);
     }
 
-    public Account save(Account account) {
+    public Account save(Account account, String username) {
         account.setUpdateAt(new Date());
         if (ObjectUtils.isEmpty(account.getUsername())) {
-            account.setUsername(SecurityUtil.getUsername());
+            account.setUsername(username);
         }
         return accountRepository.save(account);
     }
 
-    public Account findById(Long id) {
-        Optional<Account> account = accountRepository.findByIdFetch(SecurityUtil.getUsername(), id);
+    public Account findById(Long id, String username) {
+        Optional<Account> account = accountRepository.findByIdFetch(username, id);
         return account.orElseThrow(AccountNotFoundException::new);
     }
 
-    public void deleteById(Long id) {
-        accountRepository.deleteByIdAndUsername(id, SecurityUtil.getUsername());
+    public void deleteById(Long id, String username) {
+        accountRepository.deleteByIdAndUsername(id, username);
     }
 }

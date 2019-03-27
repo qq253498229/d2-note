@@ -1,7 +1,6 @@
 package cn.codeforfun.d2note.note;
 
 import cn.codeforfun.d2note.note.exception.NoteNotFoundException;
-import cn.codeforfun.d2note.util.SecurityUtil;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
@@ -21,24 +20,24 @@ public class NoteServiceImpl {
     @Resource
     private NoteRepository noteRepository;
 
-    public List<Note> getAllNote() {
-        return noteRepository.findAllFetch(SecurityUtil.getUsername());
+    public List<Note> getAllNote(String username) {
+        return noteRepository.findAllFetch(username);
     }
 
-    public Note save(Note note) {
+    public Note save(Note note, String username) {
         if (!ObjectUtils.isEmpty(note.getAccount()) && note.getAccount().getId() == 0) {
             note.setAccount(null);
         }
         note.setUpdateAt(new Date());
-        note.setUsername(SecurityUtil.getUsername());
+        note.setUsername(username);
         return noteRepository.save(note);
     }
 
-    public Note findById(Long id) {
-        return noteRepository.findByIdFetch(SecurityUtil.getUsername(), id).orElseThrow(NoteNotFoundException::new);
+    public Note findById(Long id, String username) {
+        return noteRepository.findByIdFetch(username, id).orElseThrow(NoteNotFoundException::new);
     }
 
-    public void deleteById(Long id) {
-        noteRepository.deleteByIdAndUsername(id, SecurityUtil.getUsername());
+    public void deleteById(Long id, String username) {
+        noteRepository.deleteByIdAndUsername(id, username);
     }
 }

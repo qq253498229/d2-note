@@ -40,7 +40,7 @@ public class NoteControllerTest {
     @Test
     @WithMockUser
     public void getAllNote() throws Exception {
-        given(noteService.getAllNote()).willReturn(Arrays.asList(new Note(), new Note()));
+        given(noteService.getAllNote(any())).willReturn(Arrays.asList(new Note(), new Note()));
 
         mock.perform(get("/note"))
                 .andExpect(status().isOk())
@@ -53,7 +53,7 @@ public class NoteControllerTest {
     @Test
     @WithMockUser
     public void save() throws Exception {
-        given(noteService.save(any())).willReturn(new Note(1L, "tlx-xl"));
+        given(noteService.save(any(), any())).willReturn(new Note(1L, "tlx-xl"));
         mock.perform(
                 post("/note")
                         .contentType(MediaType.APPLICATION_JSON_UTF8)
@@ -70,7 +70,7 @@ public class NoteControllerTest {
     @Test
     @WithMockUser
     public void findByIdFetch() throws Exception {
-        given(noteService.findById(any())).willReturn(new Note(1L, "tlx-xl"));
+        given(noteService.findById(any(), any())).willReturn(new Note(1L, "tlx-xl"));
         mock.perform(get("/note/1"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").isNotEmpty())

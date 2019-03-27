@@ -1,9 +1,11 @@
 package cn.codeforfun.d2note.note;
 
+import cn.codeforfun.d2note.util.SecurityUtil;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.security.Principal;
 
 import static org.springframework.http.ResponseEntity.ok;
 
@@ -19,23 +21,23 @@ public class NoteController {
     private NoteServiceImpl noteService;
 
     @GetMapping
-    public ResponseEntity getAllNote() {
-        return ok(noteService.getAllNote());
+    public ResponseEntity getAllNote(Principal principal) {
+        return ok(noteService.getAllNote(SecurityUtil.getUsername(principal)));
     }
 
     @PostMapping
-    public ResponseEntity save(@RequestBody Note note) {
-        return ok(noteService.save(note));
+    public ResponseEntity save(@RequestBody Note note, Principal principal) {
+        return ok(noteService.save(note, SecurityUtil.getUsername(principal)));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity findByIdFetch(@PathVariable Long id) {
-        return ok(noteService.findById(id));
+    public ResponseEntity findByIdFetch(@PathVariable Long id, Principal principal) {
+        return ok(noteService.findById(id, SecurityUtil.getUsername(principal)));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity deleteById(@PathVariable Long id) {
-        noteService.deleteById(id);
+    public ResponseEntity deleteById(@PathVariable Long id, Principal principal) {
+        noteService.deleteById(id, SecurityUtil.getUsername(principal));
         return ok().build();
     }
 }

@@ -1,9 +1,11 @@
 package cn.codeforfun.d2note.account;
 
+import cn.codeforfun.d2note.util.SecurityUtil;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.security.Principal;
 
 import static org.springframework.http.ResponseEntity.ok;
 
@@ -20,23 +22,23 @@ public class AccountController {
     private AccountService accountService;
 
     @GetMapping
-    public ResponseEntity getAll() {
-        return ok(accountService.findAll());
+    public ResponseEntity getAll(Principal principal) {
+        return ok(accountService.findAll(SecurityUtil.getUsername(principal)));
     }
 
     @PostMapping
-    public ResponseEntity save(@RequestBody Account account) {
-        return ok(accountService.save(account));
+    public ResponseEntity save(@RequestBody Account account, Principal principal) {
+        return ok(accountService.save(account, SecurityUtil.getUsername(principal)));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity findById(@PathVariable Long id) {
-        return ok(accountService.findById(id));
+    public ResponseEntity findById(@PathVariable Long id, Principal principal) {
+        return ok(accountService.findById(id, SecurityUtil.getUsername(principal)));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity deleteById(@PathVariable Long id) {
-        accountService.deleteById(id);
+    public ResponseEntity deleteById(@PathVariable Long id, Principal principal) {
+        accountService.deleteById(id, SecurityUtil.getUsername(principal));
         return ok().build();
     }
 }

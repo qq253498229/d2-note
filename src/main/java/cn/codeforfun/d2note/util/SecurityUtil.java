@@ -1,6 +1,6 @@
 package cn.codeforfun.d2note.util;
 
-import org.springframework.security.core.context.SecurityContextHolder;
+import java.security.Principal;
 
 /**
  * @author wangbin
@@ -8,7 +8,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
  * @qq 253498229
  */
 public class SecurityUtil {
-    public static String getUsername() {
-        return (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    public static String getUsername(Principal principal) {
+        return principal.getName();
     }
 }

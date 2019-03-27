@@ -5,6 +5,7 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.springframework.security.test.context.support.WithMockUser;
 
 import java.util.Arrays;
 import java.util.List;
@@ -22,10 +23,11 @@ public class AccountServiceTest {
     private AccountRepository accountRepository;
 
     @Test
+    @WithMockUser
     public void findAll() {
         given(accountRepository.findAllFetch(any())).willReturn(Arrays.asList(new Account(), new Account()));
 
-        List<Account> all = accountService.findAll();
+        List<Account> all = accountService.findAll("test");
         assertEquals(2, all.size());
     }
 
@@ -34,7 +36,7 @@ public class AccountServiceTest {
 
         given(accountRepository.save(any())).willReturn(new Account(1L, "mf-sor"));
 
-        Account save = accountService.save(new Account());
+        Account save = accountService.save(new Account(), "test");
         assertNotNull(save);
         assertSame(save.getId(), 1L);
         assertEquals(save.getName(), "mf-sor");
@@ -44,7 +46,7 @@ public class AccountServiceTest {
     public void findById() {
         given(accountRepository.findByIdFetch(any(), any())).willReturn(Optional.of(new Account(1L, "mf-sor")));
 
-        Account account = accountService.findById(1L);
+        Account account = accountService.findById(1L, "test");
         assertNotNull(account);
         assertSame(account.getId(), 1L);
         assertEquals(account.getName(), "mf-sor");
@@ -52,6 +54,6 @@ public class AccountServiceTest {
 
     @Test
     public void deleteById() {
-        accountService.deleteById(1L);
+        accountService.deleteById(1L, "test");
     }
 }

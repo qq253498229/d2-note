@@ -39,7 +39,7 @@ public class AccountControllerTest {
     @Test
     @WithMockUser
     public void getAll() throws Exception {
-        given(accountService.findAll()).willReturn(Arrays.asList(new Account(), new Account()));
+        given(accountService.findAll(any())).willReturn(Arrays.asList(new Account(), new Account()));
 
         mockMvc.perform(get("/account"))
                 .andExpect(status().isOk())
@@ -51,7 +51,7 @@ public class AccountControllerTest {
     @Test
     @WithMockUser
     public void save() throws Exception {
-        given(accountService.save(any())).willReturn(new Account(1L, "mf-sor"));
+        given(accountService.save(any(), any())).willReturn(new Account(1L, "mf-sor"));
 
         mockMvc.perform(
                 post("/account")
@@ -69,7 +69,7 @@ public class AccountControllerTest {
     @Test
     @WithMockUser
     public void findById() throws Exception {
-        given(accountService.findById(any())).willReturn(new Account(1L, "mf-sor"));
+        given(accountService.findById(any(), any())).willReturn(new Account(1L, "mf-sor"));
 
         mockMvc.perform(get("/account/1"))
                 .andExpect(status().isOk())
@@ -83,7 +83,7 @@ public class AccountControllerTest {
     @Test
     @WithMockUser
     public void findById_notFound() throws Exception {
-        given(accountService.findById(any())).willThrow(AccountNotFoundException.class);
+        given(accountService.findById(any(), any())).willThrow(AccountNotFoundException.class);
 
         mockMvc.perform(get("/account/1"))
                 .andExpect(status().isNotFound())
