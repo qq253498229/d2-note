@@ -23,7 +23,7 @@ public class AccountServiceTest {
 
     @Test
     public void findAll() {
-        given(accountRepository.findAll()).willReturn(Arrays.asList(new Account(), new Account()));
+        given(accountRepository.findAllFetch()).willReturn(Arrays.asList(new Account(), new Account()));
 
         List<Account> all = accountService.findAll();
         assertEquals(2, all.size());
@@ -42,11 +42,16 @@ public class AccountServiceTest {
 
     @Test
     public void findById() {
-        given(accountRepository.findById(any())).willReturn(Optional.of(new Account(1, "mf-sor")));
+        given(accountRepository.findByIdFetch(any())).willReturn(Optional.of(new Account(1, "mf-sor")));
 
         Account account = accountService.findById(1);
         assertNotNull(account);
         assertSame(account.getId(), 1);
         assertEquals(account.getName(), "mf-sor");
+    }
+
+    @Test
+    public void deleteById() {
+        accountService.deleteById(1);
     }
 }

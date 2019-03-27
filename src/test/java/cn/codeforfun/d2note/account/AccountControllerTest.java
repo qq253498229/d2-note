@@ -13,14 +13,12 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
 import javax.annotation.Resource;
-
 import java.util.Arrays;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.BDDMockito.given;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -71,7 +69,7 @@ public class AccountControllerTest {
 
     @Test
     @WithMockUser
-    public void getOne() throws Exception {
+    public void findById() throws Exception {
         given(accountService.findById(anyInt())).willReturn(new Account(1, "mf-sor"));
 
         mockMvc.perform(get("/account/1"))
@@ -85,11 +83,21 @@ public class AccountControllerTest {
 
     @Test
     @WithMockUser
-    public void getOne_notFound() throws Exception {
+    public void findById_notFound() throws Exception {
         given(accountService.findById(anyInt())).willThrow(AccountNotFoundException.class);
 
         mockMvc.perform(get("/account/1"))
                 .andExpect(status().isNotFound())
+                .andDo(print())
+        ;
+    }
+
+
+    @Test
+    @WithMockUser
+    public void deleteById() throws Exception {
+        mockMvc.perform(delete("/account/1"))
+                .andExpect(status().isOk())
                 .andDo(print())
         ;
     }

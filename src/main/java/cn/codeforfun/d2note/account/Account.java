@@ -1,13 +1,17 @@
 package cn.codeforfun.d2note.account;
 
+import cn.codeforfun.d2note.note.Note;
 import cn.codeforfun.d2note.util.JsonUtil;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * @author wangbin
@@ -17,6 +21,7 @@ import java.io.Serializable;
 @Entity
 @Data
 @NoArgsConstructor
+@JsonIgnoreProperties({"accounts", "account"})
 public class Account implements Serializable {
     private static final long serialVersionUID = -5605471569191196855L;
     @Id
@@ -24,16 +29,19 @@ public class Account implements Serializable {
     private Integer id;
     private String name;
 
-    public Account(String name) {
+    @ManyToMany(mappedBy = "accounts")
+    private List<Note> notes;
+
+    Account(String name) {
         this.name = name;
     }
 
-    public Account(Integer id, String name) {
+    Account(Integer id, String name) {
         this.id = id;
         this.name = name;
     }
 
-    public String toJson() {
+    String toJson() {
         return JsonUtil.toJson(this);
     }
 }

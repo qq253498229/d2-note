@@ -18,7 +18,7 @@ public class AccountService {
     private AccountRepository accountRepository;
 
     List<Account> findAll() {
-        return accountRepository.findAll();
+        return accountRepository.findAllFetch();
     }
 
     Account save(Account account) {
@@ -26,7 +26,11 @@ public class AccountService {
     }
 
     Account findById(Integer id) {
-        Optional<Account> account = accountRepository.findById(id);
+        Optional<Account> account = accountRepository.findByIdFetch(id);
         return account.orElseThrow(AccountNotFoundException::new);
+    }
+
+    void deleteById(Integer id) {
+        accountRepository.deleteById(id);
     }
 }
