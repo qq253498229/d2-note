@@ -32,6 +32,9 @@ public class Account implements Serializable {
 
     private Date updateAt = new Date();
 
+    @Column(nullable = false, length = 64)
+    private String username;
+
     Account(String name) {
         this.name = name;
     }

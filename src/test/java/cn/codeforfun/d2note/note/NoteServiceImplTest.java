@@ -24,7 +24,7 @@ public class NoteServiceImplTest {
 
     @Test
     public void getAllNote() {
-        given(noteRepository.findAllFetch()).willReturn(Arrays.asList(new Note(), new Note()));
+        given(noteRepository.findAllFetch(any())).willReturn(Arrays.asList(new Note(), new Note()));
 
         List<Note> allNote = noteService.getAllNote();
         assertNotNull(allNote);
@@ -42,7 +42,7 @@ public class NoteServiceImplTest {
 
     @Test
     public void findById() {
-        given(noteRepository.findByIdFetch(1L)).willReturn(Optional.of(new Note(1L, "tlx-xl")));
+        given(noteRepository.findByIdFetch(any(), any())).willReturn(Optional.of(new Note(1L, "tlx-xl")));
         Note note = noteService.findById(1L);
         assertNotNull(note);
     }

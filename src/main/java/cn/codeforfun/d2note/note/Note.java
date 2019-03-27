@@ -35,6 +35,9 @@ public class Note implements Serializable {
 
     private Date updateAt = new Date();
 
+    @Column(nullable = false, length = 64)
+    private String username;
+
     Note(String name) {
         this.name = name;
     }

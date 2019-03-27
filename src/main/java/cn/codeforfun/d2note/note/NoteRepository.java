@@ -16,17 +16,27 @@ public interface NoteRepository extends JpaRepository<Note, Long> {
     /**
      * 获取笔记列表关联账号
      *
+     * @param username 用户名
      * @return 笔记列表
      */
-    @Query("select distinct n from Note n left join fetch n.account order by n.updateAt desc ")
-    List<Note> findAllFetch();
+    @Query("select distinct n from Note n left join fetch n.account where n.username=:username order by n.updateAt desc ")
+    List<Note> findAllFetch(@Param("username") String username);
 
     /**
      * 获取笔记关联账号
      *
-     * @param id id
+     * @param username 用户名
+     * @param id       id
      * @return 笔记
      */
-    @Query("select n from Note n left join fetch n.account where n.id=:id")
-    Optional<Note> findByIdFetch(@Param("id") Long id);
+    @Query("select n from Note n left join fetch n.account where n.username=:username and n.id=:id")
+    Optional<Note> findByIdFetch(@Param("username") String username, @Param("id") Long id);
+
+    /**
+     * 根据id和用户名删除笔记
+     *
+     * @param username 用户名
+     * @param id       id
+     */
+    void deleteByIdAndUsername(@Param("id") Long id, @Param("username") String username);
 }

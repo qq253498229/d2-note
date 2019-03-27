@@ -23,7 +23,7 @@ public class AccountServiceTest {
 
     @Test
     public void findAll() {
-        given(accountRepository.findAllFetch()).willReturn(Arrays.asList(new Account(), new Account()));
+        given(accountRepository.findAllFetch(any())).willReturn(Arrays.asList(new Account(), new Account()));
 
         List<Account> all = accountService.findAll();
         assertEquals(2, all.size());
@@ -42,7 +42,7 @@ public class AccountServiceTest {
 
     @Test
     public void findById() {
-        given(accountRepository.findByIdFetch(any())).willReturn(Optional.of(new Account(1L, "mf-sor")));
+        given(accountRepository.findByIdFetch(any(), any())).willReturn(Optional.of(new Account(1L, "mf-sor")));
 
         Account account = accountService.findById(1L);
         assertNotNull(account);
