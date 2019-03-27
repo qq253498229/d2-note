@@ -4,6 +4,7 @@ import cn.codeforfun.d2note.account.exception.AccountNotFoundException;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,6 +23,7 @@ public class AccountService {
     }
 
     Account save(Account account) {
+        account.setUpdateAt(new Date());
         return accountRepository.save(account);
     }
 

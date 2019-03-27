@@ -1,9 +1,7 @@
 package cn.codeforfun.d2note.note;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 
@@ -23,5 +21,21 @@ public class NoteController {
     @GetMapping
     public ResponseEntity getAllNote() {
         return ok(noteService.getAllNote());
+    }
+
+    @PostMapping
+    public ResponseEntity save(@RequestBody Note note) {
+        return ok(noteService.save(note));
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity findByIdFetch(@PathVariable Integer id) {
+        return ok(noteService.findById(id));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity deleteById(@PathVariable Integer id) {
+        noteService.deleteById(id);
+        return ok().build();
     }
 }

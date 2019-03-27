@@ -18,7 +18,7 @@ public interface AccountRepository extends JpaRepository<Account, Integer> {
      *
      * @return 账号列表
      */
-    @Query("select a from Account a left join fetch a.notes")
+    @Query("select a from Account a left join fetch a.notes order by a.updateAt desc ")
     List<Account> findAllFetch();
 
     /**

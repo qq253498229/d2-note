@@ -9,8 +9,9 @@ import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -29,8 +30,10 @@ public class Account implements Serializable {
     private Integer id;
     private String name;
 
-    @ManyToMany(mappedBy = "accounts")
+    @OneToMany
     private List<Note> notes;
+
+    private Date updateAt = new Date();
 
     Account(String name) {
         this.name = name;
