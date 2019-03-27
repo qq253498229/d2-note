@@ -1,5 +1,6 @@
 package cn.codeforfun.d2note.account;
 
+import cn.codeforfun.d2note.account.exception.AccountNotFoundException;
 import cn.codeforfun.d2note.config.TestSecurityConfig;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,6 +17,7 @@ import javax.annotation.Resource;
 import java.util.Arrays;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -63,6 +65,31 @@ public class AccountControllerTest {
                 .andExpect(jsonPath("$").isNotEmpty())
                 .andExpect(jsonPath("$.id").value(1))
                 .andExpect(jsonPath("$.name").value("mf-sor"))
+                .andDo(print())
+        ;
+    }
+
+    @Test
+    @WithMockUser
+    public void getOne() throws Exception {
+        given(accountService.findById(anyInt())).willReturn(new Account(1, "mf-sor"));
+
+        mockMvc.perform(get("/account/1"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$").isNotEmpty())
+                .andExpect(jsonPath("$.id").value(1))
+                .andExpect(jsonPath("$.name").value("mf-sor"))
+                .andDo(print())
+        ;
+    }
+
+    @Test
+    @WithMockUser
+    public void getOne_notFound() throws Exception {
+        given(accountService.findById(anyInt())).willThrow(AccountNotFoundException.class);
+
+        mockMvc.perform(get("/account/1"))
+                .andExpect(status().isNotFound())
                 .andDo(print())
         ;
     }

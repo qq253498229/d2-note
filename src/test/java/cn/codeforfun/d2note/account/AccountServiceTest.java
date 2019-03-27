@@ -8,6 +8,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -34,7 +35,18 @@ public class AccountServiceTest {
         given(accountRepository.save(any())).willReturn(new Account(1, "mf-sor"));
 
         Account save = accountService.save(new Account());
-        assertNotNull(save.getId());
+        assertNotNull(save);
+        assertSame(save.getId(), 1);
         assertEquals(save.getName(), "mf-sor");
+    }
+
+    @Test
+    public void findById() {
+        given(accountRepository.findById(any())).willReturn(Optional.of(new Account(1, "mf-sor")));
+
+        Account account = accountService.findById(1);
+        assertNotNull(account);
+        assertSame(account.getId(), 1);
+        assertEquals(account.getName(), "mf-sor");
     }
 }

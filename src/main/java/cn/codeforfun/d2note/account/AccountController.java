@@ -28,4 +28,9 @@ public class AccountController {
     public ResponseEntity save(@RequestBody Account account) {
         return ok(accountService.save(account));
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity findById(@PathVariable Integer id) {
+        return ok(accountService.findById(id));
+    }
 }
