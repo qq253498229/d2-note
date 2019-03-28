@@ -26,7 +26,7 @@ public class Account implements Serializable {
     private Long id;
     private String name;
 
-    @OneToMany(mappedBy = "account")
+    @OneToMany(mappedBy = "account", cascade = CascadeType.REMOVE)
     @JsonIgnoreProperties({"accounts", "account"})
     private List<Note> notes;
 
